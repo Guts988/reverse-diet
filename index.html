@@ -744,14 +744,13 @@ function computeProtocol(entries) {
       // J1 / J2 / J3 : pas de changement possible
       nextCal = prev.cal;
     } else {
-      // On compare le poids de la VEILLE ("troisième poids" ou plus) au poids J2
-      const prevWeight = sorted[i - 1].weight;
-      const trend = prevWeight - weightRef; // négatif = en baisse vs J2
+      // On compare le poids du jour actuel (J4+) au poids J2
+      const trend = w - weightRef;
 
       if (trend < 0) {
-        nextCal = prev.cal + step; // Poids < J2 → +200 kcal
+        nextCal = prev.cal + step; // Poids actuel < J2 → +200 kcal
       } else {
-        nextCal = prev.cal; // Poids >= J2 → on maintient
+        nextCal = prev.cal; // Poids actuel >= J2 → maintien
       }
     }
 
@@ -1029,9 +1028,9 @@ function renderRegles(c) {
   const rules = [
     'Départ à ' + s.minCal + ' kcal',
     'J1, J2, J3 : total fixe garanti (pas de changement possible)',
-    'À partir de J4 : on compare le poids de la veille au poids de J2',
-    'Si poids veille < poids J2 → +' + s.step + ' kcal',
-    'Si poids veille ≥ poids J2 (stagne ou monte) → maintien du total',
+    'À partir de J4 : on compare le poids du jour au poids de J2',
+    'Si poids J4 (ou +) < poids J2 → +' + s.step + ' kcal',
+    'Si poids J4 (ou +) ≥ poids J2 → maintien du total',
     'Pas de durée maximale à un même total',
     'Pas de plafond calorique',
   ];
