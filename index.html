@@ -714,6 +714,7 @@ function computeProtocol(entries) {
 
   for (let i = 0; i < sorted.length; i++) {
     const entry = sorted[i];
+    const w = entry.weight;
 
     if (i === 0) {
       result.push({ ...entry, cal: startCal, mode: "REMONTEE" });
